@@ -1,0 +1,35 @@
+*
+{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body
+{
+  background-color: bisque;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 15px;
+}
+.container
+{
+  position: relative;
+  max-width: 500px;
+  max-height: 500px;
+  width: 100%;
+}
+.slider_control-item
+{
+  width: 30px;
+  height: 30px;
+  top: calc(50% - 15px);
+  border: 2px solid rgb(0, 145, 212);
+}
+.slider_container
+{
+  border-radius: 10px;
+  box-shadow: 10px 10px 20px #222;
+}
+

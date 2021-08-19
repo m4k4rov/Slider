@@ -1,0 +1,144 @@
+.slider_container
+{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.slider_modal
+{
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 333;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.slider_modal .modal-item
+{
+  position: relative;
+  max-width: 90%;
+  height: 90%;
+  object-fit: contain;
+}
+.slider_modal .modal-close
+{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  cursor: pointer;
+}
+.slider_modal .modal-close::before
+{
+  content: '\2716';
+  color: #fff;
+  font-size: 2em;
+}
+.slider_modal h2
+{
+  color: #fff;
+  font-family: sans-serif;
+  font-weight: 300;
+  font-size: 1.5em;
+  letter-spacing: 3px;
+  text-align: center;
+}
+
+.slider_content .slider_container-item
+{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transition: all 1s ease;  
+}
+.slider_control
+{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.slider_control-item
+{
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background-color: rgba(34, 34, 34, 0.61);
+  border-radius: 50%;
+  z-index: 3;
+  top: calc(50% - 30px);
+  cursor: pointer;
+  animation-name: fadeIn;
+  animation-duration: 1s;
+}
+
+.slider_control-item.next
+{
+  right: 0;
+}
+.slider_dots
+{
+  position: absolute;
+  width: 100%;
+  height: 30px;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.slider_dots .slider_dots-item
+{
+  position: relative;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #fff;
+  z-index: 3;
+  cursor: pointer;
+  transition: width 1s ease, height 1s ease;
+  animation-name: fadeIn;
+  animation-duration: 1s;
+}
+.slider_dots .slider_dots-item.active
+{
+  width: 15px;
+  height: 15px;
+  background-color: rgb(0, 145, 212);
+}
+
+.slider_container .slider_content.fade-off
+{
+  position: relative;
+  top: 0;
+  left: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 100%);
+  grid-template-rows: 100%;
+  height: 100%;
+  transition: all 1s ease;
+}
+
+.slider_container-item.fade-off
+{
+  position: static;
+}
+@keyframes fadeIn
+{
+  0%
+  {
+    opacity: 0;
+  }
+  100%
+  {
+    opacity: 1;
+  }
+}
