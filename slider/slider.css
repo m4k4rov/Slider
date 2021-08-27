@@ -7,6 +7,7 @@
   height: 100%;
   overflow: hidden;
   box-sizing: border-box;
+  background: linear-gradient();
 }
 .slider_modal
 {
@@ -18,9 +19,17 @@
   left: 0;
   z-index: 333;
   display: flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
   flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
   -ms-flex-direction: column;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
 }
 .slider_modal .modal-item
@@ -43,7 +52,7 @@
 }
 .slider_modal .modal-close::before
 {
-  content: '\2716';
+  content: '\26cc';
   color: #fff;
   font-size: 2em;
 }
@@ -104,8 +113,14 @@
   height: 30px;
   bottom: 0;
   display: flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
   justify-content: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   gap: 10px;
 }
 .slider_dots .slider_dots-item
@@ -143,8 +158,11 @@
   top: 0;
   left: 0;
   display: grid;
+  display: -ms-grid;
   grid-template-columns: repeat(3, 100%);
+  -ms-grid-columns: 100% 100% 100%;
   grid-template-rows: 100%;
+  -ms-grid-rows: 100%;
   height: 100%;
   transition: all 1s ease;
   -o-transition: all 1s ease;  

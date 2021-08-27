@@ -25,9 +25,23 @@ body
 .slider_control-item
 {
   width: 30px;
-  height: 30px;
-  top: calc(50% - 15px);
-  border: 2px solid rgb(0, 145, 212);
+  height: 70px;
+  top: calc(50% - 35px);
+  border-radius: 5px;
+}
+.slider_control-item::before
+{
+  position: absolute;
+  content: '\25C1';
+  color: #fff;
+  font-size: 1.5em;
+  width: 100%;  
+  text-align: center;
+  transform:translateY(16px);
+}
+.slider_control-item.next::before
+{
+  content: '\25B7';
 }
 .slider_container
 {

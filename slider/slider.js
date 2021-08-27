@@ -169,17 +169,32 @@ const Slider = new SliderBx();//Параметры слайдера по умо�
 
 /*Реализация свайпа на тач-скрине*/
 const sliderContainer = document.querySelector('.slider_container');
+const sliderContent = document.querySelector('.slider_content');
 sliderContainer.addEventListener('touchstart', handleTouchStart, false);
+sliderContainer.addEventListener('touchmove', handleTouchMove, false);
 sliderContainer.addEventListener('touchend', handleTouchEnd, false);
 let xDown = null;
 let yDown = null;
+let left = null;
     
 function handleTouchStart(evt) {
   const firstTouch = evt.touches[0];
   xDown = firstTouch.clientX;
   yDown = firstTouch.clientY;
+  left = parseInt(sliderContent.style.left);
+  sliderContent.style.transition = 'none';
 };
     
+function handleTouchMove(evt) {
+  if ( ! xDown || ! yDown ) {
+    return;
+  };
+  let xNow = evt.touches[0].clientX;
+  console.log(xNow);
+  let xDragDiff = xDown - xNow;
+  sliderContent.style.left = left - xDragDiff + 'px';
+}
+
 function handleTouchEnd(evt) {
   if ( ! xDown || ! yDown ) {
     return;
@@ -189,6 +204,8 @@ function handleTouchEnd(evt) {
     
   let xDiff = xDown - xUp;
   let yDiff = yDown - yUp;
+
+  sliderContent.style.transition = 'all 1s ease';
     
   if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/* отлавливаем разницу в движении */
     if ( xDiff > 100 ) {
@@ -200,6 +217,8 @@ function handleTouchEnd(evt) {
       /* swipe вправо */
       Slider.slideIndex=Slider.slideIndex-1;
       Slider.renderSlider();
+    } else if ((xDiff<100 && xDiff>10) || (xDiff>-100 && xDiff<-10)) {
+      sliderContent.style.left = left + 'px';
     }
   };
     /* свайп был, обнуляем координаты */
@@ -208,12 +227,24 @@ function handleTouchEnd(evt) {
 };
 /*Реализация свайпа мышью*/
 sliderContainer.addEventListener('mousedown', handleMouseStart, false);
+sliderContainer.addEventListener('mousemove', handleMouseMove, false);
 document.body.addEventListener('mouseup', handleMouseUp, false);
 
 function handleMouseStart(evt) {
 xDown = evt.clientX;
 yDown = evt.clientY;
+left = parseInt(sliderContent.style.left);
+sliderContent.style.transition = 'none';
 };
+
+function handleMouseMove(evt) {
+  if ( ! xDown || ! yDown ) {
+    return;
+  };
+  let xNow = evt.clientX;
+  let xDragDiff = xDown - xNow;
+  sliderContent.style.left = left - xDragDiff + 'px';
+}
 
 function handleMouseUp(evt) {
 if ( ! xDown || ! yDown ) {
@@ -225,6 +256,7 @@ let yUp = evt.clientY;
 
 let xDiff = xDown - xUp;
 let yDiff = yDown - yUp;
+sliderContent.style.transition = 'all 1s ease';
 
 if ( Math.abs( xDiff ) >= Math.abs( yDiff ) ) {/* отлавливаем разницу в движении */
   if ( xDiff > 100 ) {
@@ -236,8 +268,10 @@ if ( Math.abs( xDiff ) >= Math.abs( yDiff ) ) {/* отлавливаем раз�
     /* swipe вправо */
     Slider.slideIndex=Slider.slideIndex-1;
     Slider.renderSlider();
-  } else if (xDiff < 20 && xDiff > -20 && evt.target.src) {
+  } else if (xDiff < 10 && xDiff > -10 && evt.target.src) {
     Slider.modalCreate(evt.target);
+  } else {
+    sliderContent.style.left = left + 'px';
   }
 };
   /* свайп был, обнуляем координаты */
