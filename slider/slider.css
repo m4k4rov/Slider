@@ -7,7 +7,7 @@
   height: 100%;
   overflow: hidden;
   box-sizing: border-box;
-  background: linear-gradient();
+  background: linear-gradient(90deg, #cfecd08f, #ffc5ca80);
 }
 .slider_modal
 {
@@ -71,10 +71,10 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  transition: all 1s ease;
-  -o-transition: all 1s ease;  
-  -moz-transition: all 1s ease;
-  -webkit-transition: all 1s ease;
+  transition: all .5s ease;
+  -o-transition: all .5s ease;  
+  -moz-transition: all .5s ease;
+  -webkit-transition: all .5s ease;
 }
 .slider_control
 {
@@ -128,7 +128,7 @@
   position: relative;
   width: 10px;
   height: 10px;
-  border-radius: 50%;
+  border-radius: 5px;
   background-color: #fff;
   z-index: 3;
   cursor: pointer;
@@ -140,15 +140,14 @@
   -o-animation-name: fadeIn;
   -moz-animation-name: fadeIn;
   -webkit-animation-name: fadeIn;
-  animation-duration: 1s;
-  -o-animation-duration: 1s;
-  -moz-animation-duration: 1s;
-  -webkit-animation-duration: 1s;
+  animation-duration: .5s;
+  -o-animation-duration: .5s;
+  -moz-animation-duration: .5s;
+  -webkit-animation-duration: .5s;
 }
 .slider_dots .slider_dots-item.active
 {
-  width: 15px;
-  height: 15px;
+  width: 23px;
   background-color: rgb(0, 145, 212);
 }
 
@@ -164,10 +163,10 @@
   grid-template-rows: 100%;
   -ms-grid-rows: 100%;
   height: 100%;
-  transition: all 1s ease;
-  -o-transition: all 1s ease;  
-  -moz-transition: all 1s ease;
-  -webkit-transition: all 1s ease;
+  transition: all .5s ease;
+  -o-transition: all .5s ease;  
+  -moz-transition: all .5s ease;
+  -webkit-transition: all .5s ease;
 }
 
 .slider_container-item.fade-off

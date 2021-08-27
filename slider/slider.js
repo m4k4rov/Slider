@@ -190,7 +190,6 @@ function handleTouchMove(evt) {
     return;
   };
   let xNow = evt.touches[0].clientX;
-  console.log(xNow);
   let xDragDiff = xDown - xNow;
   sliderContent.style.left = left - xDragDiff + 'px';
 }
@@ -205,7 +204,7 @@ function handleTouchEnd(evt) {
   let xDiff = xDown - xUp;
   let yDiff = yDown - yUp;
 
-  sliderContent.style.transition = 'all 1s ease';
+  sliderContent.style.transition = 'all .5s ease';
     
   if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/* отлавливаем разницу в движении */
     if ( xDiff > 100 ) {
