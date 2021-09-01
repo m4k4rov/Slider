@@ -115,7 +115,7 @@
   height: 30px;
   bottom: 0;
   display: flex;
-  display: -webkit-box;
+  display: -webkit-flex;
   display: -ms-flexbox;
   justify-content: center;
   -webkit-box-pack: center;
