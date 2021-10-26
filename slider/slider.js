@@ -4,7 +4,7 @@ class SliderBx {
     this.slideIndex = 0
     this.options = options || {}
     this.intervalId = null
-    this.sliderItems = document.getElementsByClassName('slider_container-item')
+    this.sliderItems = document.getElementsByClassName('slider_content-item')
     this.controlItems = document.getElementsByClassName('slider_control-item')
     this.dotContainer = document.querySelector('.slider_dots')
   }
@@ -278,7 +278,7 @@ if ( Math.abs( xDiff ) >= Math.abs( yDiff ) ) {/* отлавливаем раз�
   yDown = null;
 };
 /*Отмена перетаскивания слайдов */
-const sliderContainerItem = document.querySelectorAll('.slider_container-item'); 
+const sliderContainerItem = document.querySelectorAll('.slider_content-item'); 
 for (let i=0; i<sliderContainerItem.length; i++){ 
   sliderContainerItem[i].addEventListener('dragstart',(evn) => evn.preventDefault());
 }

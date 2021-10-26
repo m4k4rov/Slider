@@ -15,13 +15,6 @@ body
   height: 100vh;
   padding: 15px;
 }
-.container
-{
-  position: relative;
-  max-width: 500px;
-  max-height: 500px;
-  width: 100%;
-}
 .slider_control-item
 {
   width: 30px;
