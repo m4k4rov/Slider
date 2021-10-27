@@ -1,15 +1,20 @@
-class SliderBx {
+class SliderBox {
 
-  constructor(options){
+  constructor(box, options){
     this.slideIndex = 0
     this.options = options || {}
     this.intervalId = null
-    this.sliderItems = document.getElementsByClassName('slider_content-item')
-    this.controlItems = document.getElementsByClassName('slider_control-item')
-    this.dotContainer = document.querySelector('.slider_dots')
+    this.sliderBox = document.querySelector(box)
+    this.sliderContainer = this.sliderBox.querySelector('.slider_container');
+    this.sliderItems = this.sliderBox.getElementsByClassName('slider_content-item')
+    this.controlItems = this.sliderBox.getElementsByClassName('slider_control-item')
+    this.dotContainer = this.sliderBox.querySelector('.slider_dots')
+    this.swipeSlide()
+    this.Go()
   }
 
   Go(){
+    console.log(this.sliderBox);
     const {slideIndex, sliderItems, controlItems, changeSlideIndex, dotContainer, options: {startSlade = 1, fade = false}} = this;
     this.slideIndex = startSlade-1;
     for (let i=0; i<controlItems.length; i++){ //события на влев/вправо
@@ -79,7 +84,7 @@ class SliderBx {
   }
 
   getSliderContent() {
-    return document.querySelector('.slider_content');
+    return this.sliderBox.querySelector('.slider_content');
   }
 
   runAutoPlay(){                                        //Функция автовоспроизведения через delay
@@ -163,122 +168,124 @@ class SliderBx {
 
   }
 
-};
-
-const Slider = new SliderBx();//Параметры слайдера по умолчанию startSlade = 1, fade = false, modal = false, delay = 3000, autoPlay = false
-
-/*Реализация свайпа на тач-скрине*/
-const sliderContainer = document.querySelector('.slider_container');
-const sliderContent = document.querySelector('.slider_content');
-sliderContainer.addEventListener('touchstart', handleTouchStart, false);
-sliderContainer.addEventListener('touchmove', handleTouchMove, false);
-sliderContainer.addEventListener('touchend', handleTouchEnd, false);
-let xDown = null;
-let yDown = null;
-let left = null;
-    
-function handleTouchStart(evt) {
-  const firstTouch = evt.touches[0];
-  xDown = firstTouch.clientX;
-  yDown = firstTouch.clientY;
-  left = parseInt(sliderContent.style.left);
-  sliderContent.style.transition = 'none';
-};
-    
-function handleTouchMove(evt) {
-  if ( ! xDown || ! yDown ) {
-    return;
-  };
-  let xNow = evt.touches[0].clientX;
-  let xDragDiff = xDown - xNow;
-  sliderContent.style.left = left - xDragDiff + 'px';
-}
-
-function handleTouchEnd(evt) {
-  if ( ! xDown || ! yDown ) {
-    return;
-  }
-  let xUp = evt.changedTouches[0].clientX;
-  let yUp = evt.changedTouches[0].clientY;
-    
-  let xDiff = xDown - xUp;
-  let yDiff = yDown - yUp;
-
-  sliderContent.style.transition = 'all .5s ease';
-    
-  if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/* отлавливаем разницу в движении */
-    if ( xDiff > 100 ) {
-      /* swipe влево */
-      Slider.slideIndex=Slider.slideIndex+1;
-      Slider.renderSlider();
-      
-    } else if (xDiff < -100 ) {
-      /* swipe вправо */
-      Slider.slideIndex=Slider.slideIndex-1;
-      Slider.renderSlider();
-    } else if ((xDiff<100 && xDiff>10) || (xDiff>-100 && xDiff<-10)) {
-      sliderContent.style.left = left + 'px';
+  swipeSlide() {
+    /*Отмена перетаскивания слайдов */
+    for (let i=0; i<this.sliderItems.length; i++){ 
+      this.sliderItems[i].addEventListener('dragstart',(evn) => evn.preventDefault());
     }
-  };
-    /* свайп был, обнуляем координаты */
-    xDown = null;
-    yDown = null;
-};
-/*Реализация свайпа мышью*/
-sliderContainer.addEventListener('mousedown', handleMouseStart, false);
-sliderContainer.addEventListener('mousemove', handleMouseMove, false);
-document.body.addEventListener('mouseup', handleMouseUp, false);
 
-function handleMouseStart(evt) {
-xDown = evt.clientX;
-yDown = evt.clientY;
-left = parseInt(sliderContent.style.left);
-sliderContent.style.transition = 'none';
-};
+    /*Реализация свайпа мышью*/
+    this.sliderContainer.addEventListener('mousedown', handleMouseStart, false);
+    this.sliderContainer.addEventListener('mousemove', handleMouseMove, false);
+    document.body.addEventListener('mouseup', handleMouseUp, false);
+    const contentBlock = this.getSliderContent();
+    let xDown = null;
+    let yDown = null;
+    let left = null;
+    const slider=this;
 
-function handleMouseMove(evt) {
-  if ( ! xDown || ! yDown ) {
+    function handleMouseStart(evt) {
+    xDown = evt.clientX;
+    yDown = evt.clientY;
+    left = parseInt(contentBlock.style.left);
+    contentBlock.style.transition = 'none';
+    };
+
+    function handleMouseMove(evt) {
+      if ( ! xDown || ! yDown ) {
+        return;
+      };
+      let xNow = evt.clientX;
+      let xDragDiff = xDown - xNow;
+      contentBlock.style.left = left - xDragDiff + 'px';
+    }
+
+    function handleMouseUp(evt) {
+    if ( ! xDown || ! yDown ) {
     return;
-  };
-  let xNow = evt.clientX;
-  let xDragDiff = xDown - xNow;
-  sliderContent.style.left = left - xDragDiff + 'px';
-}
+    }
 
-function handleMouseUp(evt) {
-if ( ! xDown || ! yDown ) {
-return;
-}
+    let xUp = evt.clientX;
+    let yUp = evt.clientY;
 
-let xUp = evt.clientX;
-let yUp = evt.clientY;
+    let xDiff = xDown - xUp;
+    let yDiff = yDown - yUp;
+    contentBlock.style.transition = 'all 1s ease';
 
-let xDiff = xDown - xUp;
-let yDiff = yDown - yUp;
-sliderContent.style.transition = 'all 1s ease';
+    if ( Math.abs( xDiff ) >= Math.abs( yDiff ) ) {/* отлавливаем разницу в движении */
+      if ( xDiff > 100 ) {
+        /* swipe влево */
+        slider.slideIndex=slider.slideIndex+1;
+        slider.renderSlider();
+        
+      } else if (xDiff < -100 ) {
+        /* swipe вправо */
+        slider.slideIndex=slider.slideIndex-1;
+        slider.renderSlider();
+      } else if (xDiff < 10 && xDiff > -10 && evt.target.src) {
+        slider.modalCreate(evt.target);
+      } else {
+        contentBlock.style.left = left + 'px';
+      }
+    };
+      /* свайп был, обнуляем координаты */
+      xDown = null;
+      yDown = null;
+    };
 
-if ( Math.abs( xDiff ) >= Math.abs( yDiff ) ) {/* отлавливаем разницу в движении */
-  if ( xDiff > 100 ) {
-    /* swipe влево */
-    Slider.slideIndex=Slider.slideIndex+1;
-    Slider.renderSlider();
-    
-  } else if (xDiff < -100 ) {
-    /* swipe вправо */
-    Slider.slideIndex=Slider.slideIndex-1;
-    Slider.renderSlider();
-  } else if (xDiff < 10 && xDiff > -10 && evt.target.src) {
-    Slider.modalCreate(evt.target);
-  } else {
-    sliderContent.style.left = left + 'px';
+    /*Реализация свайпа на тач-скрине*/
+    this.sliderContainer.addEventListener('touchstart', handleTouchStart, false);
+    this.sliderContainer.addEventListener('touchmove', handleTouchMove, false);
+    this.sliderContainer.addEventListener('touchend', handleTouchEnd, false);
+        
+    function handleTouchStart(evt) {
+      const firstTouch = evt.touches[0];
+      xDown = firstTouch.clientX;
+      yDown = firstTouch.clientY;
+      left = parseInt(contentBlock.style.left);
+      contentBlock.style.transition = 'none';
+    };
+        
+    function handleTouchMove(evt) {
+      if ( ! xDown || ! yDown ) {
+        return;
+      };
+      let xNow = evt.touches[0].clientX;
+      let xDragDiff = xDown - xNow;
+      contentBlock.style.left = left - xDragDiff + 'px';
+    }
+
+    function handleTouchEnd(evt) {
+      if ( ! xDown || ! yDown ) {
+        return;
+      }
+      let xUp = evt.changedTouches[0].clientX;
+      let yUp = evt.changedTouches[0].clientY;
+        
+      let xDiff = xDown - xUp;
+      let yDiff = yDown - yUp;
+
+      contentBlock.style.transition = 'all .5s ease';
+        
+      if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/* отлавливаем разницу в движении */
+        if ( xDiff > 100 ) {
+          /* swipe влево */
+          slider.slideIndex=slider.slideIndex+1;
+          slider.renderSlider();
+          
+        } else if (xDiff < -100 ) {
+          /* swipe вправо */
+          slider.slideIndex=slider.slideIndex-1;
+          slider.renderSlider();
+        } else if ((xDiff<100 && xDiff>10) || (xDiff>-100 && xDiff<-10)) {
+          contentBlock.style.left = left + 'px';
+        }
+      };
+        /* свайп был, обнуляем координаты */
+        xDown = null;
+        yDown = null;
+    };
   }
+
 };
-  /* свайп был, обнуляем координаты */
-  xDown = null;
-  yDown = null;
-};
-/*Отмена перетаскивания слайдов */
-const sliderContainerItem = document.querySelectorAll('.slider_content-item'); 
-for (let i=0; i<sliderContainerItem.length; i++){ 
-  sliderContainerItem[i].addEventListener('dragstart',(evn) => evn.preventDefault());
-}
+

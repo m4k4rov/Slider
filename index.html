@@ -10,12 +10,12 @@
 </head>
 <body>
   <div class="slider_box">
+    <div class="slider_control">
+      <div class="slider_control-item prev"></div>
+      <div class="slider_control-item next"></div>
+    </div>
+    <div class="slider_dots"></div>
     <div class="slider_container">
-      <div class="slider_control">
-        <div class="slider_control-item prev"></div>
-        <div class="slider_control-item next"></div>
-      </div>
-      <div class="slider_dots"></div>
       <div class="slider_content">
         <img src="./img/1.jpg" title="Вафельки" class="slider_content-item">
         <img src="./img/2.jpg" title="Дождь" class="slider_content-item">
@@ -28,12 +28,13 @@
   </div>
   <script src="./slider/slider.js"></script>
   <script>
-    //Slider.options.autoPlay=true;
-    //Slider.options.fade=true;
-    //Slider.options.startSlade = 3;
-    //Slider.options.delay = 3000;
-    Slider.options.modal = true;
-    Slider.Go();
+    const Slider = new SliderBox('.slider_box', { //Устанавливается селектор заглавного бокса, с width и height
+      modal: false, //функция модального окна при клике на изображение
+      autoPlay: false, //функция автоскроллинга
+      fade: false,  //перелистывание слайдов с эффектом исчезновения
+      startSlade: 1,  //стартовый слайд
+      delay: 3000 // задержка при автоскроллинге
+    });
     const cont = document.querySelector('.slider_box');
     cont.style.height = cont.offsetWidth + 'px';
   </script>
